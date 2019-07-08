@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.5449666044914627 -0.6672805409708686 -0.5076889595319861 4.384725432697691
-  position 0.5973193036003304 2.414297256300008 0.2032487720201478
+  orientation 0.9865616197697442 -0.14010724339108196 -0.08406028043404765 5.190413664577692
+  position 0.19229912314136943 1.4276759007272863 0.5381248135599188
 }
 TexturedBackground {
 }
@@ -32,6 +32,12 @@ Robot {
             axis 0 0 1
             anchor 0 0 0.02
           }
+          device [
+            RotationalMotor {
+            }
+            PositionSensor {
+            }
+          ]
           endPoint Solid {
             translation 0 0 -0.01
             rotation 0 0 1 0
@@ -266,6 +272,12 @@ Robot {
             axis 0 0 1
             anchor 0 0 0.02
           }
+          device [
+            RotationalMotor {
+            }
+            PositionSensor {
+            }
+          ]
           endPoint Solid {
             translation 0 0 -0.01
             rotation 0 0 1 0
@@ -501,6 +513,12 @@ Robot {
             axis 0 0 1
             anchor 0 0 0.02
           }
+          device [
+            RotationalMotor {
+            }
+            PositionSensor {
+            }
+          ]
           endPoint Solid {
             translation 0 0 -0.01
             rotation 0 0 1 0
@@ -726,6 +744,33 @@ Robot {
           }
         }
       ]
+    }
+    DistanceSensor {
+      translation 0.13 0.030000022195573406 0.01
+      rotation 0 0 0.9999999999999999 6.28238896600024
+      children [
+        Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+    }
+    DistanceSensor {
+      translation 0.09 0.030000022195573406 0.1264
+      rotation 0 0 0.9999999999999999 6.28238896600024
+      children [
+        Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      name "distance sensor(1)"
     }
   ]
   boundingObject USE BODY
