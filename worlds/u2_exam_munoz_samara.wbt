@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.9865616197697442 -0.14010724339108196 -0.08406028043404765 5.190413664577692
-  position 0.19229912314136943 1.4276759007272863 0.5381248135599188
+  orientation 1 5.031776282628443e-15 1.0544442866325915e-15 5.1223889803847085
+  position 0.07220814436271505 1.9598082635672138 0.9692030686668555
 }
 TexturedBackground {
 }
@@ -34,8 +34,11 @@ Robot {
           }
           device [
             RotationalMotor {
+              maxVelocity 30.3687
+              maxTorque 0.8473
             }
             PositionSensor {
+              resolution 0.003848
             }
           ]
           endPoint Solid {
@@ -274,8 +277,11 @@ Robot {
           }
           device [
             RotationalMotor {
+              maxVelocity 30.3687
+              maxTorque 0.8473
             }
             PositionSensor {
+              resolution 0.003848
             }
           ]
           endPoint Solid {
@@ -482,17 +488,7 @@ Robot {
                 translation 0 0 0.02
                 rotation 1 0 0 1.5708
                 children [
-                  DEF WHEEL_SHAPE Shape {
-                    appearance PBRAppearance {
-                      baseColor 0.9333333333333333 0.33600366216525523 0.33600366216525523
-                      roughness 1
-                    }
-                    geometry Cylinder {
-                      height 0.02
-                      radius 0.06
-                      subdivision 20
-                    }
-                  }
+                  USE WHEEL_SHAPE
                 ]
               }
             ]
@@ -515,8 +511,11 @@ Robot {
           }
           device [
             RotationalMotor {
+              maxVelocity 30.3687
+              maxTorque 0.8473
             }
             PositionSensor {
+              resolution 0.003848
             }
           ]
           endPoint Solid {
@@ -723,17 +722,7 @@ Robot {
                 translation 0 0 0.02
                 rotation 1 0 0 1.5708
                 children [
-                  DEF WHEEL_SHAPE Shape {
-                    appearance PBRAppearance {
-                      baseColor 0.9333333333333333 0.33600366216525523 0.33600366216525523
-                      roughness 1
-                    }
-                    geometry Cylinder {
-                      height 0.02
-                      radius 0.06
-                      subdivision 20
-                    }
-                  }
+                  USE WHEEL_SHAPE
                 ]
               }
             ]
@@ -746,8 +735,8 @@ Robot {
       ]
     }
     DistanceSensor {
-      translation 0.13 0.030000022195573406 0.01
-      rotation 0 0 0.9999999999999999 6.28238896600024
+      translation 0.13 0.045 0.01
+      rotation 1 0 0 -0.08726
       children [
         Shape {
           appearance PBRAppearance {
@@ -759,8 +748,8 @@ Robot {
       ]
     }
     DistanceSensor {
-      translation 0.09 0.030000022195573406 0.1264
-      rotation 0 0 0.9999999999999999 6.28238896600024
+      translation 0.09 0.045 0.1264
+      rotation 1 0 0 0.08726
       children [
         Shape {
           appearance PBRAppearance {
