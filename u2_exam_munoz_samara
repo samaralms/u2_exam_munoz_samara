@@ -1,0 +1,135 @@
+///////////////////For robot////////////////////////////
+1.Body is made of a circle shape
+2.A transform for the wheels were made in order to make easy the setting position from each side
+3. Because it is a round shape and we have 3 wheels, we do 2*pi/m in order to locate them
+4.Inside the Transform we make the wheels' Hinge Joint.
+5. Hinge Joint
+	Hinge Joint Parameters : we add the rotational motors and position sensors6.
+
+
+
+Rotational Motor
+If we check on the specs, we can get the values for 12V motor. Note that in No-load speed(which is the max speed) it works at 290 rpm, but we have to keep in mind Webots do not read these values. 
+As a consequence a conversion has to be made to rad/s
+
+No-load speed 290rpm ---> rad/s
+Max Velocity=30.3687 rad/s
+
+Same with stall torque, we have to convert to N*m which give us
+Stall Toque 120 oz·in---> N·m
+Torque= .8473 N*m
+
+6. End Solid point for the Shape and Color of the wheels
+ 
+
+-----------------------------------------
+Position Sensor
+
+We want to obtain information every time our encoder is moving and we want to know what 
+happens every revolution. Therefore, we applied the formula (2*pi/ counts per revolution)
+
+Resolution: (2*pi/1632.67) = .00385
+
+-----------------------------------------
+Distance Sensor
+
+	"About the position of the distance sensors"
+	First, to locate the distance sensors at same height and with a distance of 10 cm 
+	from each other. It was necessary to make a Distance Between Points Formula because
+	of the round shape of the robot.
+	The second thought was to but a rectangle with width of 10 cm and set the position
+	sensors in each side of the rectangle.
+
+
+In page number 2 of the datasheet,you can see the product summary, where it defines
+the operating range of 200mm-0mm
+
+The resolution is of 16 bits, therefore by applying the formula (2^n-1) we obtain 65535
+
+Look Up Table (https://cdn.sparkfun.com/assets/2/3/8/f/c/VCNL4040_Datasheet.pdf)
+0 	0	 0
+.2	65535    0
+
+
+
+The resolution we want to take it every 1 step
+
+---------------------------------------------------------------------------------------------
+
+//////////////////////////For code://////////////////////////////////
+
+Step 0
+
+Printing values of what the distance sensor and position sensor are reading, helps to analyze
+what you want to do with those devices.
+
+Step 1
+Once we call our distance sensor devices we can start reading the values
+Once we call our position sensor devices we can start reading the values
+
+   WbDeviceTag wheel_1 = wb_robot_get_device("wheel1");
+   WbDeviceTag wheel_2 = wb_robot_get_device("wheel2");
+   WbDeviceTag wheel_3 = wb_robot_get_device("wheel3");
+   
+   WbDeviceTag disleft = wb_robot_get_device("ds_left");
+   WbDeviceTag disright = wb_robot_get_device("ds_right");
+   
+   WbDeviceTag pos1 = wb_robot_get_device("ps_1");
+   WbDeviceTag pos2 = wb_robot_get_device("ps_2");
+   WbDeviceTag pos3 = wb_robot_get_device("ps_3");
+
+Step2
+Once we read our values we can save those values in a variable in order to work with the shifting
+every time there is an obtacle
+
+
+int disleft_value; 
+int disright_value;
+
+float pos1_value=0;
+float pos2_value=0;
+float pos3_value=0;
+
+Step 3
+If we want our distance sensor to read in meters, we need to convert the bits to meter
+using a 3 rule formula. This will be useful in order to read by the time in reaches 17 cm
+and do the shifting of the wheels by playing with their velocities
+
+ dis_ml = (disleft_value)*(.2) / 65535; //distance measure left
+ dis_mr = (disright_value)*(.2) / 65535; //distance measure right
+
+Step 4
+	1.We want to dodge the first obstacle when it reaches the 17 cm
+	2. when our left sensor detects a bigger value than the rights sensor, and no movement is 		made (turn_right==0)then,
+	3. if our position of value is less than the final position, it means it activates the 
+	movement (turn_right==1)
+	4. we enter in a loop where manipulating the position of the sensor we can substract
+	how much we want our wheel to shift. (for rotating purposes)
+	5. in order to rotate, we need velocity, therefore we have to play witht he velocities
+	of the wheel to make the right shifting.
+
+	if(dis_ml <= 0.17 && dis_ml > dis_mr && turn_right == 0) {
+    	posfinal = pos1_value - 3.1416;
+    	turn_right = 1; 
+    	}
+    
+ 	 if(turn_right == 1){
+   	 if(pos1_value > posfinal){
+    	 wb_motor_set_velocity(wheel_1,-velocity);
+    	 wb_motor_set_velocity(wheel_2,-velocity);
+    	 wb_motor_set_velocity(wheel_3,-velocity);    
+   	 }
+   	 else{
+    	turn_right = 0;    
+    	}
+    
+  	}
+Step 5
+	Same at step for, but opposite for the shifting to the left side.
+
+
+
+
+
+
+

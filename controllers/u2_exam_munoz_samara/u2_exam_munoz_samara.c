@@ -26,7 +26,7 @@
 int disleft_value; 
 int disright_value;
 
-int vel = 3;
+int velocity = 3;
 int turn_left = 0;
 int turn_right = 0;
 
@@ -80,23 +80,25 @@ int main(int argc, char **argv)
    
    
   while (wb_robot_step(TIME_STEP) != -1) {
+  
+  /////////////////VELOCITY OF WHEELS////////////////
+  
+    
+  wb_motor_set_velocity(wheel_1,-velocity);
+  wb_motor_set_velocity(wheel_2,velocity);
+  wb_motor_set_velocity(wheel_3,0); 
+    
 
 /////////////////////CON DISTANCE SENSOR/////////////////////  
   
+  
   disleft_value = wb_distance_sensor_get_value(disleft);
   disright_value = wb_distance_sensor_get_value(disright);
-  
-  wb_motor_set_velocity(wheel_1,-vel);
-  wb_motor_set_velocity(wheel_2,vel);
-  wb_motor_set_velocity(wheel_3,0);  
+   
   
   dis_ml = (disleft_value)*(.2) / 65535; //distance measure left
   dis_mr = (disright_value)*(.2) / 65535; //distance measure right
-  
-  printf("Distance Value Left: %i\t",disleft_value);
-  printf("dis_ml: %f \t",dis_ml);
-  printf("dis_mr %f \t",dis_mr);
-  printf("posfinal: %f",posfinal);
+
   
   
   
@@ -108,7 +110,7 @@ int main(int argc, char **argv)
   
   
   
-  printf("pos1_Val:  %f\n",pos1_value);
+  
   
   
   if(dis_ml <= 0.17 && dis_ml > dis_mr && turn_right == 0) {
@@ -118,15 +120,43 @@ int main(int argc, char **argv)
     
   if(turn_right == 1){
     if(pos1_value > posfinal){
-     wb_motor_set_velocity(wheel_1,-vel);
-     wb_motor_set_velocity(wheel_2,-vel);
-     wb_motor_set_velocity(wheel_3,-vel);    
+     wb_motor_set_velocity(wheel_1,-velocity);
+     wb_motor_set_velocity(wheel_2,-velocity);
+     wb_motor_set_velocity(wheel_3,-velocity);    
     }
     else{
     turn_right = 0;    
     }
     
   }
+  
+  
+  if(dis_mr <= 0.17 && dis_mr > dis_ml && turn_left == 0) {
+    posfinal = pos1_value - 3.1416;
+    turn_left = 1; 
+    }
+    
+    
+    if(turn_left == 1){
+    if(pos1_value > posfinal){
+     wb_motor_set_velocity(wheel_1,velocity);
+     wb_motor_set_velocity(wheel_2,0);
+     wb_motor_set_velocity(wheel_3,-velocity);    
+    }
+    else{
+    turn_left = 0;    
+    }
+    }
+    
+  
+  
+  
+  /////////////////////////PRINT VARIABLES////////////////////
+  printf("Distance Value Left in Bits: %i\t",disleft_value);
+  printf("Distance Measure Left in Meters: %f \t",dis_ml);
+  printf("Distance Measure Right in Meters %f \t",dis_mr);
+  printf("Position Value 1:  %f\n",pos1_value);
+  printf("posfinal: %f",posfinal);
   
   
  
