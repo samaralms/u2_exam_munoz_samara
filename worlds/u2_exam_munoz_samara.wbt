@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation 1 5.031776282628443e-15 1.0544442866325915e-15 5.1223889803847085
-  position 0.07220814436271505 1.9598082635672138 0.9692030686668555
+  orientation 0.9161243875965542 0.34168862060503946 0.2096783083675178 5.102798082497703
+  position -0.22540656936823716 2.0263461624305186 0.9549062048277055
 }
 TexturedBackground {
 }
@@ -34,10 +34,12 @@ Robot {
           }
           device [
             RotationalMotor {
+              name "wheel1"
               maxVelocity 30.3687
               maxTorque 0.8473
             }
             PositionSensor {
+              name "ps_1"
               resolution 0.003848
             }
           ]
@@ -277,10 +279,12 @@ Robot {
           }
           device [
             RotationalMotor {
+              name "wheel2"
               maxVelocity 30.3687
               maxTorque 0.8473
             }
             PositionSensor {
+              name "ps_2"
               resolution 0.003848
             }
           ]
@@ -511,10 +515,12 @@ Robot {
           }
           device [
             RotationalMotor {
+              name "wheel3"
               maxVelocity 30.3687
               maxTorque 0.8473
             }
             PositionSensor {
+              name "ps_3"
               resolution 0.003848
             }
           ]
@@ -746,6 +752,11 @@ Robot {
           }
         }
       ]
+      name "ds_left"
+      lookupTable [
+        0 0 0
+        0.2 65535 0
+      ]
     }
     DistanceSensor {
       translation 0.09 0.045 0.1264
@@ -759,10 +770,15 @@ Robot {
           }
         }
       ]
-      name "distance sensor(1)"
+      name "ds_right"
+      lookupTable [
+        0 0 0
+        0.2 65535 0
+      ]
     }
   ]
   boundingObject USE BODY
   physics Physics {
   }
+  controller "u2_exam_munoz_samara"
 }
