@@ -25,10 +25,22 @@
 
 int disleft_value; 
 int disright_value;
-int pasos=0;
-int pasos2=0;
+
+int vel = 3;
+int turn_left = 0;
+int turn_right = 0;
+
+int gir_r = 0;
+int gir_l = 0;
+
 float dis_ml=0;
 float dis_mr=0;
+
+float pos1_value=0;
+float pos2_value=0;
+float pos3_value=0;
+
+float posfinal = 0;
 
 /*
  * This is the main program.
@@ -61,87 +73,64 @@ int main(int argc, char **argv)
    wb_position_sensor_enable(pos2,TIME_STEP);
    wb_position_sensor_enable(pos3,TIME_STEP);
    
+   wb_motor_set_position(wheel_1,INFINITY);
+   wb_motor_set_position(wheel_2,INFINITY);
+   wb_motor_set_position(wheel_3,INFINITY);
 
-    
    
-  
-
-  
    
   while (wb_robot_step(TIME_STEP) != -1) {
+
+/////////////////////CON DISTANCE SENSOR/////////////////////  
   
   disleft_value = wb_distance_sensor_get_value(disleft);
   disright_value = wb_distance_sensor_get_value(disright);
   
-  printf("The value is %i/n",disleft_value);
-  
-  
-   //resolucion 65535 = .2 m max
-  // if disleft_value = ?
-  //how much ? (disleft_value)(.2)/65535
+  wb_motor_set_velocity(wheel_1,-vel);
+  wb_motor_set_velocity(wheel_2,vel);
+  wb_motor_set_velocity(wheel_3,0);  
   
   dis_ml = (disleft_value)*(.2) / 65535; //distance measure left
   dis_mr = (disright_value)*(.2) / 65535; //distance measure right
-   
-  printf("The value is %f \n",dis_ml);
-  printf("The value is %f \t",dis_mr);
+  
+  printf("Distance Value Left: %i\t",disleft_value);
+  printf("dis_ml: %f \t",dis_ml);
+  printf("dis_mr %f \t",dis_mr);
+  printf("posfinal: %f",posfinal);
   
   
   
-  
-  double speed = -1.5;
-  
-  wb_motor_set_position(wheel_1, INFINITY);
-  wb_motor_set_velocity(wheel_1, speed);
-  
-  wb_motor_set_position(wheel_2, INFINITY);
-  wb_motor_set_velocity(wheel_2, -speed);
-  
-  wb_motor_set_position(wheel_3, INFINITY);
-  wb_motor_set_velocity(wheel_3, 0);
+    ///////////////////////CON POSITION SENSOR////////////////
+
+  pos1_value = wb_position_sensor_get_value(pos1);
+  pos2_value = wb_position_sensor_get_value(pos2);
+  pos3_value = wb_position_sensor_get_value(pos3);
   
   
-  if(dis_ml <= 0.17 && dis_ml < dis_mr) {
-    pasos++;
-    
-    if (pasos >=1 && pasos<=60){
-      wb_motor_set_position(wheel_1, INFINITY);
-      wb_motor_set_velocity(wheel_1, 15);
-      
-      wb_motor_set_position(wheel_2, INFINITY);
-      wb_motor_set_velocity(wheel_2, 15);
-      
-      wb_motor_set_position(wheel_3, INFINITY);
-      wb_motor_set_velocity(wheel_3, 15);
+  
+  printf("pos1_Val:  %f\n",pos1_value);
+  
+  
+  if(dis_ml <= 0.17 && dis_ml > dis_mr && turn_right == 0) {
+    posfinal = pos1_value - 3.1416;
+    turn_right = 1; 
     }
     
-    
-    else {
-    pasos = 0;
+  if(turn_right == 1){
+    if(pos1_value > posfinal){
+     wb_motor_set_velocity(wheel_1,-vel);
+     wb_motor_set_velocity(wheel_2,-vel);
+     wb_motor_set_velocity(wheel_3,-vel);    
+    }
+    else{
+    turn_right = 0;    
     }
     
-    }
-    
-      if(dis_mr <= 0.30 && dis_mr < dis_ml) {
-    pasos2++;
-    
-    if (pasos2 >=1 && pasos2 <=60){
-      wb_motor_set_position(wheel_1, INFINITY);
-      wb_motor_set_velocity(wheel_1, -10);
-      
-      wb_motor_set_position(wheel_2, INFINITY);
-      wb_motor_set_velocity(wheel_2, -10);
-      
-      wb_motor_set_position(wheel_3, INFINITY);
-      wb_motor_set_velocity(wheel_3, -10);
-    }
-    
-     
-    else {
-    pasos2 = 0;
-    }
-    
-    }
+  }
+  
+  
+ 
+ 
     
     
   

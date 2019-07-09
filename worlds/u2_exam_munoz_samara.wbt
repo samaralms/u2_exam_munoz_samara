@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.3253821510858429 -0.7409342720056261 -0.5874886044190495 3.9204178854433356
-  position 0.6920483139001871 1.816708281643761 0.34622063047406254
+  orientation 0.27907936661111904 -0.7785181947289254 -0.5621602330367663 3.879201429346918
+  position 0.7456032792757047 1.7510489267835645 0.2295461337011666
 }
 TexturedBackground {
 }
@@ -768,6 +768,11 @@ Robot {
                 }
               ]
               name "ds_right"
+              lookupTable [
+                0 0 0
+                0.2 65535 0
+              ]
+              resolution 1
             }
             DistanceSensor {
               translation 0 0 -0.055
@@ -784,6 +789,11 @@ Robot {
                 }
               ]
               name "ds_left"
+              lookupTable [
+                0 0 0
+                0.2 65535 0
+              ]
+              resolution 1
             }
           ]
         }
