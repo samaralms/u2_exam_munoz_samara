@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.9161243875965542 0.34168862060503946 0.2096783083675178 5.102798082497703
-  position -0.20648738100304648 1.9407186950166029 0.9157405077636628
+  orientation 0.3253821510858429 -0.7409342720056261 -0.5874886044190495 3.9204178854433356
+  position 0.6920483139001871 1.816708281643761 0.34622063047406254
 }
 TexturedBackground {
 }
@@ -44,7 +44,7 @@ Robot {
             }
           ]
           endPoint Solid {
-            translation 0 0 -0.01
+            translation 0 0 -0.009999999999999998
             rotation 0 0 1 0
             children [
               DEF sr1 HingeJoint {
@@ -289,7 +289,7 @@ Robot {
             }
           ]
           endPoint Solid {
-            translation 0 0 -0.01
+            translation 0 0 -0.009999999999999998
             rotation 0 0 1 0
             children [
               DEF sr1 HingeJoint {
@@ -525,7 +525,7 @@ Robot {
             }
           ]
           endPoint Solid {
-            translation 0 0 -0.01
+            translation 0 0 -0.009999999999999998
             rotation 0 0 1 0
             children [
               DEF sr1 HingeJoint {
@@ -740,40 +740,53 @@ Robot {
         }
       ]
     }
-    DistanceSensor {
-      translation 0.13 0.045 0.01
-      rotation 1 0 0 -0.08726
+    DEF BARRA_10CM Transform {
+      translation 0.12124355529913125 0.03 0.07000000213161787
+      rotation 0 1 0 5.7595865139999995
       children [
         Shape {
           appearance PBRAppearance {
           }
           geometry Box {
-            size 0.01 0.01 0.01
+            size 0.01 0.01 0.1
           }
         }
-      ]
-      name "ds_left"
-      lookupTable [
-        0 0 0
-        0.2 65535 0
-      ]
-    }
-    DistanceSensor {
-      translation 0.09 0.045 0.1264
-      rotation 1 0 0 0.08726
-      children [
-        Shape {
-          appearance PBRAppearance {
-          }
-          geometry Box {
-            size 0.01 0.01 0.01
-          }
+        DEF DIS_SENSORS Transform {
+          children [
+            DistanceSensor {
+              translation 0 0 0.055
+              rotation 0 1 0 -0.0872665
+              children [
+                Shape {
+                  appearance DEF GREEN PBRAppearance {
+                    baseColor 0.45098039215686275 0.8235294117647058 0.08627450980392157
+                    metalness 0
+                  }
+                  geometry DEF BOX1 Box {
+                    size 0.01 0.01 0.01
+                  }
+                }
+              ]
+              name "ds_right"
+            }
+            DistanceSensor {
+              translation 0 0 -0.055
+              rotation 0 1 0 0.0872665
+              children [
+                Shape {
+                  appearance DEF GREEN PBRAppearance {
+                    baseColor 0.45098039215686275 0.8235294117647058 0.08627450980392157
+                    metalness 0
+                  }
+                  geometry DEF BOX1 Box {
+                    size 0.01 0.01 0.01
+                  }
+                }
+              ]
+              name "ds_left"
+            }
+          ]
         }
-      ]
-      name "ds_right"
-      lookupTable [
-        0 0 0
-        0.2 65535 0
       ]
     }
   ]
@@ -781,4 +794,32 @@ Robot {
   physics Physics {
   }
   controller "u2_exam_munoz_samara"
+}
+Solid {
+  translation 0.553295205876221 0.2 0.25180827333868483
+  rotation 0 1 0 1.0471975480000006
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry DEF box_1 Box {
+        size 0.4 0.4 0.1
+      }
+    }
+  ]
+  boundingObject USE box_1
+}
+Solid {
+  translation 0.7900000000000003 0.2 0.8400000000000002
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry DEF box_1 Box {
+        size 0.1 0.4 0.1
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject USE box_1
 }

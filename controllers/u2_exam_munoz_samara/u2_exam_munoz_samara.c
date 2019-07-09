@@ -24,7 +24,11 @@
 
 
 int disleft_value; 
-int disright_value; 
+int disright_value;
+int pasos=0;
+int pasos2=0;
+float dis_ml=0;
+float dis_mr=0;
 
 /*
  * This is the main program.
@@ -69,6 +73,19 @@ int main(int argc, char **argv)
   disleft_value = wb_distance_sensor_get_value(disleft);
   disright_value = wb_distance_sensor_get_value(disright);
   
+  printf("The value is %i/n",disleft_value);
+  
+  
+   //resolucion 65535 = .2 m max
+  // if disleft_value = ?
+  //how much ? (disleft_value)(.2)/65535
+  
+  dis_ml = (disleft_value)*(.2) / 65535; //distance measure left
+  dis_mr = (disright_value)*(.2) / 65535; //distance measure right
+   
+  printf("The value is %f \n",dis_ml);
+  printf("The value is %f \t",dis_mr);
+  
   
   
   
@@ -82,7 +99,51 @@ int main(int argc, char **argv)
   
   wb_motor_set_position(wheel_3, INFINITY);
   wb_motor_set_velocity(wheel_3, 0);
-
+  
+  
+  if(dis_ml <= 0.17 && dis_ml < dis_mr) {
+    pasos++;
+    
+    if (pasos >=1 && pasos<=60){
+      wb_motor_set_position(wheel_1, INFINITY);
+      wb_motor_set_velocity(wheel_1, 15);
+      
+      wb_motor_set_position(wheel_2, INFINITY);
+      wb_motor_set_velocity(wheel_2, 15);
+      
+      wb_motor_set_position(wheel_3, INFINITY);
+      wb_motor_set_velocity(wheel_3, 15);
+    }
+    
+    
+    else {
+    pasos = 0;
+    }
+    
+    }
+    
+      if(dis_mr <= 0.30 && dis_mr < dis_ml) {
+    pasos2++;
+    
+    if (pasos2 >=1 && pasos2 <=60){
+      wb_motor_set_position(wheel_1, INFINITY);
+      wb_motor_set_velocity(wheel_1, -10);
+      
+      wb_motor_set_position(wheel_2, INFINITY);
+      wb_motor_set_velocity(wheel_2, -10);
+      
+      wb_motor_set_position(wheel_3, INFINITY);
+      wb_motor_set_velocity(wheel_3, -10);
+    }
+    
+     
+    else {
+    pasos2 = 0;
+    }
+    
+    }
+    
+    
   
   };
 
